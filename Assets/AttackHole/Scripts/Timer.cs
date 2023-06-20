@@ -12,6 +12,8 @@ public class Timer : MonoBehaviour
     bool isTimerStarted;
     private void Start()
     {
+        Debug.Log(transform.name + "Tgdf");
+
      //   StartTimer();
         isTimerStarted = false;
     }

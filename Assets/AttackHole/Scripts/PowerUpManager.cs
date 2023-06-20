@@ -39,6 +39,8 @@ public class PowerUpManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        
         
         GameDataManager.instance.LoadGameData();
         pref_scale = PlayerPrefs.GetInt(lvl_power_scale, 0);
@@ -165,12 +167,16 @@ public class PowerUpManager : MonoBehaviour
 
 
     public void SetSize() {
+        particleSystem.Play();
+
         pref_scale = PlayerPrefs.GetInt(lvl_power_scale, 0);
         power_scale.PowerUpLvl.text = "Lvl. " + pref_scale;
         Player.transform.localScale += new Vector3(0.1f, 0.1f, 0.1f)*pref_scale;
 
     }
     public void SetTime() {
+        particleSystem.Play();
+
         pref_time = PlayerPrefs.GetInt(lvl_power_time, 0);
         power_time.PowerUpLvl.text = "Lvl. " + pref_time;
         timer.totalTime += 3 * pref_time;
@@ -183,18 +189,72 @@ public class PowerUpManager : MonoBehaviour
         Player.GetComponent<PlayerControl>().movespeed -= 0.2f*pref_speed;
     }
 
+    public float RewardSizeTimer;
+    float RewardSizeTimerCounter;
+    public TMP_Text RewardSizeText;
     public void OnRewardSizeClicked() {
-        PowerUpSound();
 
-        //Adcontrol.instance.ShowRewardedAd();
+        if (RewardSizeTimerCounter <= 0)
+        {
+            RewardSizeText.gameObject.transform.parent.gameObject.SetActive(true);
+
+            PowerUpSound();
+            SetSize();
+
+            RewardSizeTimerCounter = RewardSizeTimer;
+
+            StartCoroutine(SizeTimer());
+
+        }
+        //GameManager.instance.ADS.ShowRewardedAd();
     }
+    IEnumerator SizeTimer()
+    {
+        while (RewardSizeTimerCounter > 0)
+        {
+            RewardSizeTimerCounter--;
+
+
+            RewardSizeText.text = RewardSizeTimerCounter.ToString();
+
+            yield return new WaitForSeconds(1);
+        }
+        RewardSizeText.gameObject.transform.parent.gameObject.SetActive(false);
+    }
+
+    public float OnRewardTimeTimer;
+    float OnRewardTimeTimerCounter;
+    public TMP_Text RewardTimerText;
     public void OnRewardTimeClicked() {
-        PowerUpSound();
 
-        //Adcontrol.instance.ShowRewardedAd();
+        if (OnRewardTimeTimerCounter <= 0)
+        {
+            RewardTimerText.gameObject.transform.parent.gameObject.SetActive(true);
+
+            PowerUpSound();
+            SetTime();
+
+            OnRewardTimeTimerCounter = OnRewardTimeTimer;
+
+            StartCoroutine(TimeTimer());
+
+        }
+        // GameManager.instance.ADS.ShowRewardedAd();
 
     }
+    IEnumerator TimeTimer()
+    {
+        while (OnRewardTimeTimerCounter > 0)
+        {
+            OnRewardTimeTimerCounter--;
 
+            RewardTimerText.text = OnRewardTimeTimerCounter.ToString();
+
+            yield return new WaitForSeconds(1);
+        }
+
+        RewardTimerText.gameObject.transform.parent.gameObject.SetActive(false);
+    }
     public void RewardSize() {
         particleSystem.Play();
       //  popupSize.SetActive(true);

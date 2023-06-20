@@ -16,7 +16,7 @@ public class Adcontrol : MonoBehaviour
 	private static string outputMessage = string.Empty;
 	
     [HideInInspector]
-    public bool isReawrdLoaded;
+    private bool _isReawrdLoaded;
     PowerUpManager powerUpManager;
 
 
@@ -34,9 +34,9 @@ public class Adcontrol : MonoBehaviour
 	}
 	public void Start()
 	{
+        Debug.Log(transform.name + "HJKGjk");
 
-
-		MobileAds.SetiOSAppPauseOnBackground(true);
+        MobileAds.SetiOSAppPauseOnBackground(true);
 
 		// Initialize the Google Mobile Ads SDK.
 		MobileAds.Initialize(initStatus => { });
@@ -125,7 +125,7 @@ public class Adcontrol : MonoBehaviour
             RegisterReloadHandler(ad);
             // Inform the UI that the ad is ready.
             //AdLoadedStatus?.SetActive(true);
-            isReawrdLoaded = true;
+            _isReawrdLoaded = true;
         });
     }
     public void ShowAd()
@@ -222,7 +222,7 @@ public class Adcontrol : MonoBehaviour
         }
 
         // Inform the UI that the ad is not ready.
-        isReawrdLoaded = false;
+        _isReawrdLoaded = false;
     }
 
     private void RegisterEventHandlers(RewardedAd ad)

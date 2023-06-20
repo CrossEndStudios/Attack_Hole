@@ -8,6 +8,9 @@ using DxCoder;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+
+    public Adcontrol ADS;
+
     private int count, totalAmmo;
     [HideInInspector] public bool iSGameStarted;
     AmmoManager powerUpManager;
