@@ -31,8 +31,12 @@ public class CollectibleDestroy : MonoBehaviour
             powerUpName = other.gameObject.GetComponent<Collectible>().WeaponName;
             powerUpManager.AddAmmo(powerUpName);
             ProgressBarCirlce(30);
-           // SoundManager.Instance.PlaySound(SoundManager.Instance.Collect);
-            Destroy(other.gameObject);
+            // SoundManager.Instance.PlaySound(SoundManager.Instance.Collect);
+
+            Collectible c = other.gameObject.GetComponent<Collectible>();
+            c.PlayAUDIO();
+
+            Destroy(other.gameObject,1);
         }
     }
 

@@ -9,7 +9,13 @@ public class Collectible : MonoBehaviour
     public string WeaponName;
     public int damage;
 
+
+    public AudioSource CollectedAudio;
+
+
     [SerializeField] public bool isFalling;
+
+    bool audioPlayed;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,7 +31,17 @@ public class Collectible : MonoBehaviour
            
                 rb.AddForce(Vector3.down * rb.mass * Physics.gravity.magnitude * (3 - 1.0f), ForceMode.Force);
            
+            
+
         }
 
+    }
+    public void PlayAUDIO()
+    {
+        if (audioPlayed == false)
+        {
+            CollectedAudio.Play();
+            audioPlayed = true;
+        }
     }
 }
