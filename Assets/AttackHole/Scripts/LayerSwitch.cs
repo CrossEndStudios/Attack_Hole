@@ -22,15 +22,21 @@ public class LayerSwitch : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        other.gameObject.layer = LayerMask.NameToLayer(EndLayer);
-        other.gameObject.GetComponent<Collectible>().isFalling = true;
+        if (other.gameObject.GetComponent<Collectible>() != null)
+        {
+            other.gameObject.layer = LayerMask.NameToLayer(EndLayer);
+            other.gameObject.GetComponent<Collectible>().isFalling = true;
+        }
      
     }
 
     private void OnTriggerExit(Collider other)
     {
-        other.gameObject.layer = LayerMask.NameToLayer(BeginLayer);
-        other.gameObject.GetComponent<Collectible>().isFalling = false;
+        if (other.gameObject.GetComponent<Collectible>() != null)
+        {
+            other.gameObject.layer = LayerMask.NameToLayer(BeginLayer);
+            other.gameObject.GetComponent<Collectible>().isFalling = false;
+        }
 
     }
 }
